@@ -1,4 +1,3 @@
-#WRONG
 import numpy as np
 
 def checkLeft(mx,i,j):
@@ -16,25 +15,25 @@ def checkDown(mx,i,j):
 def checkUR(mx,i,j):
     temp = []
     for k in range(4):
-            temp.append(mx[i-k,j+k])
+        temp.append(mx[i-k,j+k])
     return temp
 
 def checkUL(mx,i,j):
     temp = []
     for k in range(4):
-            temp.append(mx[i-k,j-k])
+        temp.append(mx[i-k,j-k])
     return temp
 
 def checkDR(mx,i,j):
     temp = []
     for k in range(4):
-            temp.append(mx[i+k,j+k])
+        temp.append(mx[i+k,j+k])
     return temp
 
 def checkDL(mx,i,j):
     temp = []
     for k in range(4):
-            temp.append(mx[i+k,j-k])
+        temp.append(mx[i+k,j-k])
     return temp
 
 def product(xs):
@@ -43,141 +42,55 @@ def product(xs):
         total *= x
     return total
 
-def problem11(mx):
-    r,c = mx.shape
+def padMatrix(m):
+    r, c = m.shape
+    bottomPad = topPad = np.zeros([3,c+6])
+    leftPad = rightPad = np.zeros([r,3])
+    m = np.concatenate((m,rightPad),axis=1)
+    m = np.concatenate((leftPad,m),axis=1)
+    m = np.concatenate((topPad,m),axis=0)
+    m = np.concatenate((m,bottomPad),axis=0)
+    return m
+
+def problem11(m):
+    r,c = m.shape
+    mx = padMatrix(m)
     greatestSoFar = 0
     candidate = []
-    for i in range(r):
-        for j in range(c):
-            if i < 3 and j < 3:
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif i < 3 and j > c - 4:
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif i < 3:
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif i > r - 4 and j > c - 4:
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif i > r - 4 and j < 3:
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif i > r - 4:
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif j < 3:
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            elif j > c - 4:
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-            else:
-                temp = checkUp(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkLeft(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDL(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDown(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkDR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkRight(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
-                temp = checkUR(mx,i,j)
-                if product(temp) > greatestSoFar:
-                    candidate = temp
+    for i in range(3,r+3):
+        for j in range(3,c+3):
+            temp = checkUp(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkUL(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkLeft(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkDL(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkDown(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkDR(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkRight(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
+            temp = checkUR(mx,i,j)
+            if product(temp) > greatestSoFar:
+                candidate = temp
+                greatestSoFar = product(temp)
     return candidate, product(candidate)
 matrix = np.array([ [ 8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8 ],
                     [ 49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 04, 56, 62, 00 ],
